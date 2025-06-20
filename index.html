@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Envio de Relatório</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f7f9fc;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        
+
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            text-align: center;
+            width: 400px;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        p {
+            color: #666;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            font-size: 16px;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        #resultado {
+            margin-top: 20px;
+            color: #333;
+        }
+        .btn-drive {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background-color: #2563eb;
+    color: white;
+    padding: 10px 16px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: bold;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    transition: background 0.3s;
+}
+
+.btn-drive:hover {
+    background-color: #1e40af;
+}
+
+    </style>
+</head>
+<body>
+    <a href="https://drive.google.com/drive/folders/1tTxpsi59Fu74ditPMXRJ9W1geSPbvAFi" target="_blank" class="btn-drive">📂 Abrir Drive</a>
+    <div class="container">
+        <h1>Relatório de Tendências</h1>
+        <p>Clique no botão abaixo para gerar e enviar automaticamente o relatório.</p>
+        <button onclick="enviarRelatorio()">Enviar Relatório</button>
+        <p id="resultado"></p>
+    </div>
+
+    <script>
+        async function enviarRelatorio() {
+            const resultado = document.getElementById('resultado');
+            resultado.innerText = "Enviando...";
+            try {
+                const res = await fetch("http://127.0.0.1:8000/enviar-relatorio", {
+                    method: "POST"
+                });
+                const data = await res.json();
+                resultado.innerText = data.status;
+            } catch (err) {
+                resultado.innerText = "Erro ao enviar.";
+            }
+        }
+    </script>
+</body>
+</html>
